@@ -10,10 +10,10 @@ const App = () =>{
     getRecipes();
   },[]);
 
-  const getRecipes = async () => {
-    const response = await fetch(`https://api.edamam.com/search?q=chicken&app_id=${APP_ID}&app_key=${APP_KEY}`);
-    const data = response.json();
-    console.log(data);
+  const getRecipes = () => {
+    fetch(`https://api.edamam.com/search?q=chicken&app_id=${APP_ID}&app_key=${APP_KEY}`)
+    .then(response => response.json())
+    .then(data => console.log(data));
   }
   
   return(
