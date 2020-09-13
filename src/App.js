@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Recipe from "./Recipe";
+import Header from "./Header";
 const App = () => {
   const APP_ID = "303aeecc";
   const APP_KEY = "b21661e5a989f5e5dfe869b91caf3f16";
 
   const [recipes, setRecipes] = useState([]);
-  const [search,setSearch] = useState('');
-  const [query,setQuery] = useState('chicken');
+  const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("chicken");
   useEffect(() => {
     getRecipes();
   }, [query]);
@@ -17,32 +18,35 @@ const App = () => {
       `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`
     )
       .then((response) => response.json())
-      .then((data) => setRecipes(data.hits));
+      .then((data) => {
+        setRecipes(data.hits);
+        // console.log(data.hits);
+      });
   };
 
-  const updateSearch = e =>{
+  const updateSearch = (e) => {
     setSearch(e.target.value);
-  }
-  const getSearch = e =>{
+  };
+  const getSearch = (e) => {
     e.preventDefault();
     setQuery(search);
-    setSearch('');
-  }
+    setSearch("");
+  };
 
   return (
     <div className="App">
-      <form onSubmit={getSearch} className="search-form">
-        <input type="text" className="search-bar" value={search} onChange={updateSearch}/>
-        <button type="submit" className="search-button">
-          Search
-        </button>
-      </form>
+      <Header
+        getSearch={getSearch}
+        search={search}
+        updateSearch={updateSearch}
+      />
       {recipes.map((recipe) => (
         <Recipe
           key={recipe.recipe.label}
           title={recipe.recipe.label}
           calories={recipe.recipe.calories}
           image={recipe.recipe.image}
+          ingredients={recipe.recipe.ingredients}
         />
       ))}
     </div>
