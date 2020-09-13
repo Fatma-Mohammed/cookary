@@ -40,15 +40,19 @@ const App = () => {
         search={search}
         updateSearch={updateSearch}
       />
+      <div className="recipe-container">
       {recipes.map((recipe) => (
         <Recipe
           key={recipe.recipe.label}
           title={recipe.recipe.label}
-          calories={recipe.recipe.calories}
+          calories={Math.floor(recipe.recipe.calories)}
           image={recipe.recipe.image}
           ingredients={recipe.recipe.ingredients}
         />
       ))}
+
+      </div>
+      
     </div>
   );
 };
